@@ -1,0 +1,160 @@
+<html>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <head>
+        <title> Dashboard </title>
+        <style>
+            form {
+                display: flex;
+                justify-content: space-between;
+                margin: 10px;
+                padding: 20px;
+                font-size: 15px;
+            }
+
+            .left {
+                width: 90px;
+                background-color: rgb(172, 170, 170);
+            }
+
+            .left a {
+                display: block;
+                text-align: left;
+                padding: 16px;
+                transition: all 0.3s ease;
+                color: rgb(0, 0, 0);
+                font-size: 12px;
+            }
+
+            .left a:hover {
+                background-color: #000;
+            }
+
+            .right {
+                background-color: rgb(172, 170, 170);
+                display: block;
+                text-align: right;
+                padding: 16px;
+                transition: all 0.3s ease;
+                color: rgb(0, 0, 0);
+                font-size: 12px;
+            }
+
+            .middle {
+                background-color: (172, 170, 170);
+            }
+
+            .active {
+                background-color: #04AA6D;
+            }
+
+            h2 {
+                font-size: small;
+                color: grey
+            }
+
+            button {
+                display: block;
+                border: none;
+                margin: 4px;
+            }
+
+            button:hover {
+                background-color: #e7e7e7;
+            }
+        </style>
+    </head>
+
+    <body>
+        <form action="/facebook/<%= person.id %>" method="POST">
+            <div class = "left">
+                <button name="person" type="submit" value="profile"><i class="fa fa-home"></i> <%= person.fname %> <%= person.lname %></button> 
+                <button name="person" type="submit" value="friends"><i class="fa fa-group"></i> Friends</button> 
+                <button name="person" type="submit" value="events"><i class="fa fa-sticky-note"></i> Events</button> 
+                <button name="person" type="submit" value="memories"><i class="fa fa-globe"></i> Memories </button>
+                <button name="person" type="submit" value="groups"><i class="fa fa-trash"></i> Groups </button>
+                <br>
+                <h2> Your shortcuts </h2>
+                <div class = "Shortcuts"></div>
+                <script>
+                    var groups = ["Group1", "Group2", "Group3", "Group4", "Group5"];
+                    for (let group in groups) {
+                        document.getElementsByClassName("Shortcuts")[0].innerHTML += "<a href='#'>" + groups[group] + "</a>";
+                    }
+                </script>
+            </div>
+
+            <div class = "middle">
+                <div class = "poster">
+                    <a href="#"><i class="fa fa-user-circle"></i></a>
+                    <input size = "80" style="border-radius: 25px;" type="text" placeholder="Whats on your mind,Jackson?">
+                    <br>
+                    <div class ="Post-Type">
+                        <a href="#"><i class="fa fa-file-video-o"></i> Live Video</a> 
+                        <a href="#"><i class="fa fa-photo"></i> Photo/Video</a> 
+                        <a href="#"><i class="fa fa-meh-o"></i> Feeling/Activity</a> 
+                    </div>
+                </div>
+                <div class="posts" style = "border-radius: 25px;background-color: rgb(172, 170, 170);padding:8px">
+                    <% for(let post of posts) { %>
+                        <div style="background-color: white;">
+                            <h3> <b><%= post.username %></b> </h3>
+                            <h4 style = "color: gray;"> <%= post.created %></h4>
+                            <h4> <%= post.content %></h4>
+                            <h4 style = "color: grey;"> <%= post.likes %> likes</h4>
+                            <% if (post.comments) { %>
+                                <h4 style = "color: gray;"> <%= post.comments.length %> comments</h4>
+                            <% } else { %>
+                                <h4 style = "color: gray;"> 0 comments</h4>
+                            <% } %>
+                            <br>
+                            <% if (post.liked) { %>
+                                <button style = 'background-color: lightblue;' type="submit" name="like" value="<%= post.id %>"> Like </button> 
+                            <% } else { %>
+                                <button type="submit" name="like" value="<%= post.id %>"> Like </button> 
+                            <% } %>
+                            <button name = "comment" value="<%= post.id %>" type="submit"> Comment </button>
+                            <br>
+                            <% if (post.comments.length) { %>
+                                <% for (let comment of post.comments) { %>
+                                    <div style = "border-radius: 25px;background-color: lightgray;margin: 10px;padding:8px">
+                                        <h4> <b><%= comment.username %></b> </h4>
+                                        <p> <%= comment.content %> </p>
+                                    </div>
+                                <% } %>
+                            <% } %>
+
+                            <div style ="display: flex;">
+                                <a type="submit" name="profile" value="<%= person.id %>"><img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com" style="width:50px;height:50px;border-radius: 50%;"></a>
+                                <input style="width: 100%;border-radius: 25px;" type="text" name = "create_comment" placeholder="Write a comment...">
+                                <button type="submit" name="create" value="<%= post.id %>"> Post </button>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class = "right">
+                <% if (requests.length) { %>
+                    <h2> Requests </h2>
+                    <% for(let request of requests) { %>
+                        <div>
+                            <h2 style = "color: black;"><%= request.fname %> <%= request.lname %></h2>
+                            <div style ="display: flex;flex-direction: row;">
+                                <button style="background-color: blue;color:white " type="submit" name="confirm" value="<%= request.id %>"> Confirm </button>
+                                <button style="background-color: blue;color:white " type="submit" name="delete" value="<%= request.id %>"> Delete </button>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
+                <br>
+                <h2 style="text-align: left;color: rgb(172, 170, 170);"> Contacts </h2>
+                <div class = "Contacts">
+                    <% for(let person of persons) { %>
+                        <button type="submit" name="person" value="<%= person.id %>"><%= person.fname %> <%= person.lname %></button>
+                    <% } %>
+                </div>
+                <div class = "Birthdays"></div>
+            </div>
+        </form>
+    </body>
+</html>

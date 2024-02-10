@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <style>
+            .body {
+                display: flex;
+                background-color: lightgrey;
+                justify-content: space-around;
+            }
+
+            .intro {
+                background-color: white;
+                border-radius: 25px;
+                margin: 10px;
+                padding:8px
+            }
+
+            button {
+                border: none;
+                background-color: white;
+                text-align: center;
+                font-size: 16px;
+                margin: 4px 2px;
+            }
+
+            button:hover {
+                background-color: lightgrey;
+            }
+
+            button:hover.friends {
+                background-color: lightblue;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+        <form action = "/facebook/profile/<%= person.id %>" method="POST">
+            <div class = "Head">
+                <h1> <%= person.fname %> <%= person.lname %> </h1>
+                <div class = "friends" style="display: flex;flex-direction: row;justify-content: space-between;">
+                    <h3 style = "color: gray"> <%= friends %> friends</h3>
+                    <% if (isFriend === "friends") { %>
+                        <button style = "background-color: blue;" name="button" value="see_friends" type="submit"> Friends </button>
+                    <% } else if (isFriend === "Not friends") { %>
+                        <button style = "background-color: blue;" name="button" value="add_friends" type="submit"> Add Friend </button>
+                    <% } else if (isFriend === "Pending") { %>
+                        <button style = "background-color: blue;" name="button" value="cancel_request" type="submit"> Cancel Request </button>
+                    <% } %>
+                </div>
+                <br>
+                <div class = "navigation">
+                    <button name="button" value="posts" type="submit"> Posts </button>
+                    <button name="button" value="about" type="submit"> About </button>
+                    <button name="button" value="friends" type="submit"> Friends </button>
+                    <button name="button" value="photos" type="submit"> Photos </button>
+                    <button name="button" value="videos" type="submit"> Videos </button>
+                </div>
+            </div>
+
+
+            <div class = "Body">
+                <div class = "Intro">
+                    <h2> Intro </h2>
+                    <h4 style = "text-align: center;"> <%= bio %></h4>
+                    <button style = "width: 100%;border-radius: 25px;" type="button"> Edit Bio </button>
+                    <% if (curwork) { %>
+                        <h4> <%= curwork %></h4>
+                    <% } %>
+                    <% if (pstwork) { %>
+                        <h4> <%= pstwork %></h4>
+                    <% } %>
+                    <% if (currentedu) { %>
+                        <h4> <%= currentedu %></h4>
+                    <% } if (school) { %>
+                        <h4> <%= school %></h4>
+                    <% } %>
+                    <h4> Lives in <%= curlive %></h4>
+                    <h4> From <%= born %></h4>
+                    <% if (relationship) { %>
+                        <h4 onclick=""> In a relationship with <%= relationship.fname %> <%= relationship.lname %></h4>
+                    <% } %>
+                </div>
+
+                <div class = "Friends">
+
+                </div>
+
+                <div class = "posts">
+                    <div style = "border-radius: 25px;background-color: white;margin: 10px;padding:8px">
+                        <% for (let post of posts) { %>
+                            <h3> <b><%= post.username %></b> </h3>
+                            <h4 style = "color: gray;"> <%= post.created %></h4>
+                            <h4> <%= post.content %></h4>
+                            <h4 style = "color: gray;"> <%= post.likes %> likes</h4>
+                            <% if (post.comments) { %>
+                                <h4 style = "color: gray;"> <%= post.comments.length %> comments</h4>
+                            <% } else { %>
+                                <h4 style = "color: gray;"> 0 comments</h4>
+                            <% } %>
+                            <br>
+                            <button type="submit" name="like" value="<%= post.id %>"> Like </button> <button name = "comment" value="<%= post.id %>" type="submit"> Comment </button>
+                            <br>
+                            <% if (post.comments.length) { %>
+                                <% for (let comment of post.comments) { %>
+                                    <div style = "border-radius: 25px;background-color: lightgray;margin: 10px;padding:8px">
+                                        <h4> <b><%= comment.username %></b> </h4>
+                                        <h4> <%= comment.content %> </h4>
+                                    </div>
+                                <% } %>
+                            <% } %>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>

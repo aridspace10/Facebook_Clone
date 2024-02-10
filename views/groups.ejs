@@ -1,0 +1,105 @@
+<html>
+    <head>
+        <style>
+            body {
+                background-color: lightgrey;
+            }
+
+            button {
+                border: none;
+                background-color: white;
+                text-align: center;
+                display: block;
+                font-size: 16px;
+                font-weight: bold;
+                margin: 4px;
+            }
+
+            .navigator {
+                float: left;
+                background-color: white;
+            }
+
+            .posts {
+                float:left;
+                margin: 1% 25%;
+                background-color: lightgrey;
+            }
+
+            button:hover {
+                background-color: lightgrey;
+            }
+
+            .btn-link {
+                border:none;
+                outline:none;
+                background:none;
+                cursor:pointer;
+                color:#0000EE;
+                padding:0;
+                text-decoration:underline;
+                font-family:inherit;
+                font-size:inherit;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="navigator">
+            <h2> Groups </h2>
+            <form action="/facebook/<%= person.id %>/groups" method="POST">
+                <button type="submit" name="button" value="feed"><i class="fa fa-newspaper-o"></i>Your Feed</button>
+                <button type="submit" name="button" value="discover"><i class="fa fa-compass"></i>Discover</button>
+                <button type="submit" name="button" value="groups"><i class="fa fa-group"></i>Your Groups</button>
+                <button style="background-color: aqua;" type="submit" name="button" value="create"> Create Group </button>
+                <br />
+                <h3> Groups you've joined </h3>
+                <% for(let group of groups) { %>
+                    <button type="submit" name="button" value="<%= group.id %>"><img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com" style="width:50px;height:50px;">
+                        <%= group.name %> <p style="color:gray">Last active <%= group.last_active %>m ago</p></button>
+                <% } %>
+            </form>
+        </div>
+
+        <div class="posts">
+            <h3 style="color: gray;"> Recent Activity </h3>
+            <% for (let post of posts) { %>
+                <form style = "border-radius: 25px;background-color: white;margin: 10px;padding:8px">
+                    <div style = "display: flex;flex-direction: row;justify-content: space-between;">
+                        <div style = "display: flex;flex-direction: row;">
+                            <img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com" style="width:50px;height:50px;border-radius: 25%;">
+                            <div style = "display: flex;flex-direction: column;">
+                                <button type="submit" class="btn-link"> <%= post.group_name %></button>
+                                <div style = "display: flex;flex-direction: row;">
+                                    <h4> <b><%= post.username %></b> </h4>
+                                    <h4 style = "color: gray;"> <%= post.created %></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit"> <i class="fa fa-reorder"></i></button>
+                            <button type="submit"> X </button>
+                        </div>
+                    </div>
+                    <h4> <%= post.content %></h4>
+                    <h4 style = "color: gray;"> <%= post.likes %> likes</h4>
+                    <% if (post.comments) { %>
+                        <h4 style = "color: gray;"> <%= post.comments.length %> comments</h4>
+                    <% } else { %>
+                        <h4 style = "color: gray;"> 0 comments</h4>
+                    <% } %>
+                    <br>
+                    <button type="button"> Like </button> <button id = "comment" type="button"> Comment </button>
+                    <br>
+                    <% if (post.comments.length) { %>
+                        <% for (let comment of post.comments) { %>
+                            <div style = "border-radius: 25px;background-color: lightgray;margin: 10px;padding:8px">
+                                <h4> <b><%= comment.username %></b> </h4>
+                                <h4> <%= comment.content %> </h4>
+                            </div>
+                        <% } %>
+                    <% } %>
+                </form>
+            <% } %>
+        </div>
+    </body>
+</html>

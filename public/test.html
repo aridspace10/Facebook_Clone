@@ -1,0 +1,134 @@
+<html>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <head>
+        <title> Dashboard </title>
+        <style>
+            body {
+                background-color: rgb(128, 126, 126);
+            }
+
+            .flex-container {
+                display: flex;
+                justify-content: center;
+            }
+
+            .flex-container > div {
+                background-color: #f1f1f1;
+                margin: 10px;
+                padding: 20px;
+                font-size: 30px;
+            }
+
+            middle.post {
+                background-color: rgb(255, 255, 255);
+            }
+
+            .left {
+                width: 90px;
+                background-color: rgb(172, 170, 170);
+            }
+
+            .left a {
+                display: block;
+                text-align: left;
+                padding: 16px;
+                transition: all 0.3s ease;
+                color: rgb(0, 0, 0);
+                font-size: 12px;
+            }
+
+            .left a:hover {
+                background-color: #000;
+            }
+
+            .right {
+                background-color: rgb(172, 170, 170);
+            }
+
+            .right a {
+                display: block;
+                text-align: right;
+                padding: 16px;
+                transition: all 0.3s ease;
+                color: rgb(0, 0, 0);
+                font-size: 12px;
+            }
+
+            .middle {
+                background-color: white;
+            }
+
+            .active {
+                background-color: #04AA6D;
+            }
+
+            h2 {
+                font-size: small;
+                color: grey
+            }
+        </style>
+        <script>
+            
+        </script>
+    </head>
+
+    <body>
+        {% extends 'Base.html' %} 
+
+        {% block content %}
+        <div class = "flex-container">
+            <div class = "left">
+                <a href="#"><i class="fa fa-home"></i> Jackson Van Duikeren</a> 
+                <a href="#"><i class="fa fa-group"></i> Friends</a> 
+                <a href="#"><i class="fa fa-sticky-note"></i> Events</a> 
+                <a href="#"><i class="fa fa-globe"></i> Memories </a>
+                <a href="#"><i class="fa fa-trash"></i> Groups </a>
+                <br>
+                <h2> Your shortcuts </h2>
+                <div class = "Shortcuts"></div>
+                <script>
+                    var groups = ["Group1", "Group2", "Group3", "Group4", "Group5"];
+                    for (let group in groups) {
+                        document.getElementsByClassName("Shortcuts")[0].innerHTML += "<a href='#'>" + groups[group] + "</a>";
+                    }
+                </script>
+            </div>
+
+            <div class = "middle">
+                <div class = "post">
+                    <a href="#"><i class="fa fa-user-circle"></i></a>
+                    <input size = "80" style="border-radius: 25px;" type="text" placeholder="Whats on your mind,Jackson?">
+                    <br>
+                    <div class ="Post-Type">
+                        <a href="#"><i class="fa fa-file-video-o"></i> Live Video</a> 
+                        <a href="#"><i class="fa fa-photo"></i> Photo/Video</a> 
+                        <a href="#"><i class="fa fa-meh-o"></i> Feeling/Activity</a> 
+                    </div>
+                </div>
+            </div>
+
+            <div class = "right">
+                <h2> Contacts </h2>
+                <div class = "Contacts"></div>
+                <div class = "Birthdays"></div>
+                <script>
+                    import {findFriends, getUserSingular} from "./database.js";
+                    result = [2,3]
+                    for (let id in result) {
+                        document.getElementsByClassName("Contacts")[0].innerHTML += "<h1>" + id + "</h1>";
+                        //document.getElementsByClassName("Contacts")[0].innerHTML += "<a href='#'>" + result[id[await getUserSingular(id)]] + "</a>";
+                    }
+                    var birthdays = ["John"]
+                    if (birthdays.length) {
+                        document.getElementsByClassName("Birthdays")[0].innerHTML += "<h2> Birthdays </h2>";
+                        for (let birthday in birthdays) {
+                            document.getElementsByClassName("Birthdays")[0].innerHTML += "<a href='#'>" + birthdays[birthday] + "</a>";
+                        }
+                    }
+                </script>
+
+
+            </div>
+        </div>
+    </body>
+</html>

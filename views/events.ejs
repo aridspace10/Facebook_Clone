@@ -1,0 +1,87 @@
+<html>
+
+    <head>
+        <style>
+            button.navigate {
+                border: none;
+                background-color: white;
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+            }
+
+            button:hover {
+                background-color: #e7e7e7;
+            }
+
+            .events {
+                background-color: grey;
+            }
+
+            .Your-Events {
+                background-color: white;
+                border: grey;
+                border-radius: 25px;
+            }
+
+            .your_event {
+                border: grey;
+                border-radius: 25px;
+            }
+
+            .discover {
+                background-color: white;
+                border: grey;
+                border-radius: 25px;
+            }
+
+            .options {
+                display: flex;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <form action="/facebook/<%= person.id %>/events" method="POST">
+            <h2> Events </h2>
+            <input style="width: 100%;border-radius: 25px;" type="text" name = "search" placeholder="Search">
+            <button class = "navigate"><i class="fa fa-calendar"></i> Home </button>
+            <!-- Turn into dropdown -->
+            <button class = "navigate"><i class="fa fa-calendar"></i> Your events </button>
+            <button class = "navigate"><i class="fa fa-birthday-cake"></i> Birthdays </button>
+            <button class = "navigate"><i class="fa fa-bell"></i> Notifications </button>
+            <button style = "background-color: blue; color: white;" class = "navigate"> + Create New Event </button>
+            <br>
+            <h3> Categories </h3>
+            <% for(let category of categories) { %>
+                <button type = "submit" name = "category" value = "<%= category.name %>"  class = "navigate"><i class="<%= category.icon %>" ></i> <%= category.name %></button>
+            <% } %>
+        </div>
+
+        <div class = "events">
+            <div class = "Your-Events">
+                <h2> Your Events </h2>
+                <% for(let event of user_events) { %>
+                    <div class = "your-event">
+
+                    </div>
+                <% } %>
+            </div>
+
+            <div class = "discover">
+                <h2> Discover events </h2>
+                <select name = "location">
+                    <option value="None"> Location </option>
+                    
+                </select>
+                <div class ="options">
+
+                </div>
+            </div>
+        </div>
+        </form>
+    </body>
+</html>

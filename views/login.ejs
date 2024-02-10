@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <title> Login </title>
+        <style>
+            h1 {
+                color: blue;
+            }
+
+            body {
+                text-align: center;
+            }
+
+            .left {
+                display: flex;
+                align-items: left;
+            }
+
+            .right {
+                display: flex;
+                align-items: right;
+            }
+        </style>
+
+        <script type="module">
+            import {getUserByLogin} from "./database.js";
+            async function login() {
+                document.getElementsByClassName("right")[0].innerHTML += "Hello"
+                let email = document.getElementById("Email").value;
+                let password = document.getElementById("password").value;
+                const response = await fetch('/facebook/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })}).then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                    }).catch(error => console.error('Error:', error));
+
+            }
+
+        </script>
+    </head>
+    <body>
+        <div class = "left">
+            <h1> Facebook </h1>
+            <h2> Recent logins </h2>
+        </div>
+        <div class = "right">
+            <form action = "/facebook/login" method="POST">
+                <input size = "80" id="Email" name="Email" style="border-radius: 25px;" type="text" placeholder="Email Address Or Phone Number">
+                <input size = "80" id="password" name="password" style="border-radius: 25px;" type="password" placeholder="Password">
+                <button type="submit" onclick="login()">Log in</button>
+                <a href="#">Forgotten password?</a>
+                <button type="button">Create New Account</button>
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <style>
+            body {
+                background-color: lightgrey;
+            }
+
+            button {
+                border: none;
+                background-color: white;
+                text-align: center;
+                display: block;
+                font-size: 16px;
+                font-weight: bold;
+                margin: 4px;
+            }
+
+            .navigator {
+                float: left;
+                background-color: white;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="navigator">
+            <h2> Groups </h2>
+            <form action="/facebook/<%= person.id %>/groups" method="POST">
+                <button type="submit" name="button" value="feed"><i class="fa fa-newspaper-o"></i>Your Feed</button>
+                <button type="submit" name="button" value="discover"><i class="fa fa-compass"></i>Discover</button>
+                <button type="submit" name="button" value="groups"><i class="fa fa-group"></i>Your Groups</button>
+                <button style="background-color: aqua;" type="submit" name="button" value="create"> Create Group </button>
+                <br />
+                <h3> Groups you've joined </h3>
+                <% for(let group of groups) { %>
+                    <button type="submit" name="button" value="<%= group.id %>"><img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com" style="width:50px;height:50px;">
+                        <%= group.name %> <p style="color:gray">Last active <%= group.last_active %>m ago</p></button>
+                <% } %>
+            </form>
+        </div>
+    </body>
+</html>

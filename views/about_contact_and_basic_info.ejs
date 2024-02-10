@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <title> About </title>
+        <style>
+            .body {
+                display: flex;
+                background-color: lightgrey;
+                justify-content: space-around;
+            }
+
+            button {
+                color: grey;
+                border: none;
+                outline: none;
+            }
+
+            .Head.button.active {
+                background-color: lightblue;
+            }
+
+            .left {
+                display: flex;
+                flex-direction: column;
+            }
+
+            button.left {
+                display: block;
+            }
+
+            .right {
+                display: flex;
+            }
+
+            .active {
+                background-color: lightblue;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class = "Head">
+            <h1> <%= person.fname %> <%= person.lname %> </h1>
+            <h3 style = "color: gray"> <%= friends %> friends</h3>
+            <br>
+            <form action = "/facebook/profile/:id" method="POST">
+                <button name="button" value="posts" type="submit"> Posts </button>
+                <button name="button" value="about" type="submit"> About </button>
+                <button name="button" value="friends" type="submit"> Friends </button>
+                <button name="button" value="photos" type="submit"> Photos </button>
+                <button name="button" value="videos" type="submit"> Videos </button>
+            </form>
+        </div>
+
+        <div class = "Body">
+            <div class = "About">
+                <div class = "left">
+                    <form action = "/facebook/profile/:id/about" method="POST">
+                        <button style="display: block;" type="submit" name="button2" value="Overview"> Overview </button>
+                        <button style="display: block;" type="submit" name="button2" value="WorkEdu"> Work and Education </button>
+                        <button style="display: block;" type="submit" name="button2" value="Places"> Places lived </button>
+                        <button class="active" style="display: block;" type="submit" name="button2" value="Contact"> Contact and Basic info </button>
+                        <button style="display: block;" type="submit" name="button2" value="FamRel"> Family and Relationship </button>
+                    </form>
+                </div>
+
+                <div class = "right">
+                    <i class="fa fa-file-video-o"></i>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
